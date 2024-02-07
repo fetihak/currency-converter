@@ -1,0 +1,29 @@
+@import '../../../../styles.scss';
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: $primary-color;
+    color: $text-color;
+    height: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4rem;
+    .logo {
+        img{
+            height: 50px;
+        }
+       
+    }
+    .nav{
+        align-items: center;
+        .nav-link , .nav-link:hover{
+          text-decoration: none;
+          color:$secondary-color;
+          font-weight: 400;
+          margin-left: 1rem;
+          font-size: 1.2rem;
+        }
+    }
+}

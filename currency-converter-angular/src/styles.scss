@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+
+$primary-color: #ff880e; 
+$secondary-color: #000000;
+$third-color: #532a02;
+$hover-color: darken($primary-color, 10%); 
+$border-color: #ced4da;
+$font-color: #495057; 
+$text-color: #ffffff;
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin:  0 !important;
+    line-height: 1.6;
+  }
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem 5rem;
+}
+.sticky-panel{
+    position: sticky;
+    top: 5rem;
+    background-image: url('./assets/backgroud-home.png');
+ }
+
+
+$breakpoints: (
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px
+);
+
+@each $breakpoint-name, $breakpoint-value in $breakpoints {
+  @media (min-width: $breakpoint-value) {
+    @for $i from 1 through 12 {
+      .col-#{$breakpoint-name}-#{$i} {
+        flex: 0 0 calc(100% * (#{$i} / 12));
+        max-width: calc(100% * (#{$i} / 12));
+      }
+    }
+  }
+}
+
