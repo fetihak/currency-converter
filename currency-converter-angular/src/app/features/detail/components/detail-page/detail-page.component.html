@@ -1,0 +1,20 @@
+<div class="details-page">
+    <div class="details-container">
+      <div class="details-text">
+        EURO
+      </div>
+      <a class="details-button" routerLink="/"> Back to Home </a>
+    </div>
+    <div class="grid-container sticky-panel">
+      <div class="col-md-12">
+        <app-currency-converter
+        [disableFromCurrency]="true"
+        [hideDetailOption]="true"
+        [hideSwapButton]="true"
+        >
+        </app-currency-converter>
+      </div>
+    </div>
+  </div>
+  <app-currency-chart></app-currency-chart>
+  

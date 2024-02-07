@@ -1,0 +1,22 @@
+@import '../../../../../styles.scss';
+.details-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: $background-color;
+    color: $text-color;
+    font-family: $font-family;
+    padding: 1rem 5rem;
+    .details-button {
+        padding: 0.5rem 1rem;
+        background-color:$primary-color;
+        text-decoration: none !important;
+        color: $text-color;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: background-color 0.3s;
+    }
+}
+ 

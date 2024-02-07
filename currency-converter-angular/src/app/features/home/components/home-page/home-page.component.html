@@ -1,9 +1,13 @@
 <div class="grid-container sticky-panel">
-    <div class="col-md-12">
-    <app-currency-converter>
-      </app-currency-converter>
-    </div>
+  <div class="col-md-12">
+    <app-currency-converter
+      [disableFromCurrency]="false"
+      [hideDetailOption]="false"
+      [hideSwapButton]="false"
+    >
+    </app-currency-converter>
   </div>
-    <div>
-      <app-currency-card> </app-currency-card>
-    </div>
+</div>
+<div>
+  <app-currency-card> </app-currency-card>
+</div>

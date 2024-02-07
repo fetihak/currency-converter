@@ -13,7 +13,7 @@
       </div>
       <div class="currency-converter__group">
         <label for="fromCurrency" class="currency-converter__label">From</label>
-        <select class="currency-converter__select" formControlName="fromCurrency" required="required">
+        <select class="currency-converter__select" formControlName="fromCurrency" required="required" (change)="onFromCurrencyChange($event)">
           <option *ngFor="let currency of currencies" [value]="currency">
             {{ currency }}
           </option>
@@ -30,7 +30,7 @@
       <!-- To Currency Select -->
       <div class="currency-converter__group">
         <label for="toCurrency" class="currency-converter__label">To</label>
-        <select class="currency-converter__select" formControlName="toCurrency" required="required">
+        <select class="currency-converter__select" formControlName="toCurrency" required="required" (change)="onToCurrencyChange($event)">
           <option *ngFor="let currency of currencies" [value]="currency">
             {{ currency }}
           </option>
