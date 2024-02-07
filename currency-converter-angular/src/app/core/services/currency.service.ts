@@ -10,16 +10,19 @@ import { map, shareReplay } from 'rxjs/operators';
 export class CurrencyService {
 
   private apiUrl = 'http://data.fixer.io/api';
-  private accessKey = '01cfaa03cff04eca0c56aba0cec41905';
+  private accessKey = 'ac0f5e5ecfab59a863063f383bf22e2d';
  
 
   private baseCurrency = new BehaviorSubject<string>('EUR');
   private targetCurrency = new BehaviorSubject<string>('USD');
   private baseAmount = new BehaviorSubject<number>(1);
+  private convertedAmount = new BehaviorSubject<number>(1.08);
+
 
   baseCurrency$ = this.baseCurrency.asObservable();
   targetCurrency$ = this.targetCurrency.asObservable();
   baseAmount$ = this.baseAmount.asObservable();
+  convertedAmount$ = this.convertedAmount.asObservable();
 
   setBaseCurrency(currency: string) {
     this.baseCurrency.next(currency);
@@ -32,6 +35,7 @@ export class CurrencyService {
   setBaseAmount(amount: number) {
     this.baseAmount.next(amount);
   }
+
   constructor(private http: HttpClient) {}
 
   
@@ -50,6 +54,7 @@ export class CurrencyService {
             fromCurrency === 'EUR' ? amount : amount / fromRate;
           const convertedAmount =
             toCurrency === 'EUR' ? euroAmount : euroAmount * toRate;
+            this.convertedAmount.next(convertedAmount);
           return convertedAmount;
         }
         throw new Error('Unable to convert currency.');

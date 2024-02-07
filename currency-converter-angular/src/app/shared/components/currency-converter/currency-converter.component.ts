@@ -16,6 +16,7 @@ export class CurrencyConverterComponent implements OnInit , OnDestroy {
   baseCurrency: string = 'EUR';
   targetCurrency: string = 'USD';
   baseAmount : number = 1;
+  convertedAmount:number =1
   conversionResultText: string = '';
   private subscriptions = new Subscription();
   @Input() disableFromCurrency!:boolean;
@@ -36,9 +37,7 @@ export class CurrencyConverterComponent implements OnInit , OnDestroy {
     });
     this.disableForm()
   }
-  ngOnInit(): void {
-    this.initForm()
-    this.getRates();
+  getBaseData(){
     this.subscriptions.add(
       this.currencyService.baseCurrency$.subscribe((currency) => {
         this.baseCurrency = currency;
@@ -59,6 +58,22 @@ export class CurrencyConverterComponent implements OnInit , OnDestroy {
         this.converterForm.patchValue({ toCurrency: currency });
       })
     );
+    this.subscriptions.add(
+      this.currencyService.convertedAmount$.subscribe((currency) => {
+        this.convertedAmount = currency;
+       // this.converterForm.patchValue({ toCurrency: currency });
+      })
+    );
+    if(this.conversionResultText === ''){
+      this.conversionResultText = `${this.baseAmount} ${this.baseCurrency } = ${this.convertedAmount.toFixed(2)} ${this.targetCurrency}`;
+    }
+
+  }
+  ngOnInit(): void {
+    this.initForm()
+    this.getRates();
+    this.getBaseData();
+  
   }
   
   onFromCurrencyChange(event: Event){
