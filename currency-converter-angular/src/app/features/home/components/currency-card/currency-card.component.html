@@ -1,15 +1,17 @@
 <div class="currency-card_container">
   <div class="currency-card_container">
-    <div class="currency-card" *ngFor="let val of convertedValues" >
-      <div class="currency-card__content">
-        <p>
-          {{ baseAmount }} {{ baseCurrency }} = {{ val.convertedAmount }}
-          {{ val.toCurrency }}
-        </p>
+    <ng-container *ngIf="convertedValues?.length; else nodata">
+      <div class="currency-card" *ngFor="let val of convertedValues">
+        <div class="currency-card__content">
+          <p>
+            {{ baseAmount }} {{ baseCurrency }} = {{ val.convertedAmount }}
+            {{ val.toCurrency }}
+          </p>
+        </div>
       </div>
-    </div>
-  </div> 
-   
+    </ng-container>
+    <ng-template #nodata>
+      <h2>Loading ......</h2>
+    </ng-template>
   </div>
-  
-    
+</div>

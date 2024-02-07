@@ -10,7 +10,7 @@ import { map, shareReplay } from 'rxjs/operators';
 export class CurrencyService {
 
   private apiUrl = 'http://data.fixer.io/api';
-  private accessKey = 'ac0f5e5ecfab59a863063f383bf22e2d';
+  private accessKey = 'ac0f5e5ecfab59a863063f383bf22e2d1';
  
 
   private baseCurrency = new BehaviorSubject<string>('EUR');
