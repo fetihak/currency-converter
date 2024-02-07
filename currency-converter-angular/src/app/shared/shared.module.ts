@@ -18,6 +18,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,FormsModule, ReactiveFormsModule
   ],
-  exports: [HeaderComponent, FooterComponent]
+  exports: [HeaderComponent, FooterComponent , CurrencyConverterComponent]
 })
 export class SharedModule { }

@@ -6,13 +6,15 @@
 $primary-color: #ff880e; 
 $secondary-color: #000000;
 $third-color: #532a02;
-$hover-color: darken($primary-color, 10%); 
+$hover-color: darken($primary-color, 10%);
+$background-color: #1a1a1a; 
 $border-color: #ced4da;
 $font-color: #495057; 
 $text-color: #ffffff;
+$font-family: 'Poppins', sans-serif;
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: $font-family;
     margin:  0 !important;
     line-height: 1.6;
   }
@@ -26,6 +28,9 @@ body {
     position: sticky;
     top: 5rem;
     background-image: url('./assets/backgroud-home.png');
+ }
+ .main-page{
+    min-height: 10rem;
  }
 
 

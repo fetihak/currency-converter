@@ -1,0 +1,64 @@
+@import '../../../../styles.scss';
+.currency-converter {
+    background-color: $background-color;
+    padding: 20px;
+    color: $text-color;
+    font-family: $font-family;
+    .currency-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .currency-converter__group {
+        flex-basis: calc(33.333% - 50px); // Subtract margin
+        position: relative;
+        margin-right: 15px;
+        label{
+            display: block;
+        }
+        &--swap {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: 1rem;
+            margin-right: 1rem;
+          }
+        .currency-converter__input ,.currency-converter__select {
+            background-color: darken($background-color, 5%);
+            border: 1px solid darken($background-color, 10%);
+            padding: 10px;
+            border-radius: 4px;
+            color: $text-color;
+            font-size: 1rem;
+            width: 95%;
+          }
+          .btn-convert {
+            background-color: $primary-color;
+            color: $text-color;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 27px;
+        
+            &:hover {
+              background-color: lighten($primary-color, 10%);
+            }
+          }
+          .currency-converter__result {
+            background-color: lighten($background-color, 5%);
+            color: $text-color;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 10px;
+          }
+    }
+}
