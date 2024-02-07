@@ -9,3 +9,4 @@ export const popularCurrencies = [
     'OMR',
     'BHD',
   ];
+  

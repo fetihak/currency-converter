@@ -10,7 +10,7 @@ import { map, shareReplay } from 'rxjs/operators';
 export class CurrencyService {
 
   private apiUrl = 'http://data.fixer.io/api';
-  private accessKey = 'ac0f5e5ecfab59a863063f383bf22e2d1';
+  private accessKey = 'ac0f5e5ecfab59a863063f383bf22e2d';
  
 
   private baseCurrency = new BehaviorSubject<string>('EUR');
@@ -48,6 +48,10 @@ export class CurrencyService {
   }
   getCurrencyNames(): Observable<any> {
     return this.http.get(`${this.apiUrl}/symbols?access_key=${this.accessKey}`).pipe(shareReplay(1));
+  }
+  getExchangeRateForDate(date: string, fromSymbol: string, toSymbol:string): Observable<any> {
+    const url = `${this.apiUrl}/${date}?access_key=${this.accessKey}&symbols=${fromSymbol},${toSymbol}`;
+    return this.http.get(url).pipe(shareReplay(1));
   }
   convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Observable<number> {
     return this.getLatestRates().pipe(

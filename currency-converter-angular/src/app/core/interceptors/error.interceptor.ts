@@ -9,13 +9,16 @@ export class ErrorInterceptor implements HttpInterceptor {
   // constructor(private toastr: ToastrService) {}
   constructor() {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+   
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = 'An error occurred';
 
         if (error.error instanceof ErrorEvent) {
+          console.log("here")
           errorMessage = `Error: ${error.error.message}`;
         } else {
+          console.log("here1")
           errorMessage = `Error: ${error.status} - ${error.statusText}`;
         }
         // this.toastr.error(errorMessage, 'Error', {
