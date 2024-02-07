@@ -10,34 +10,33 @@ import { Subscription } from 'rxjs';
   templateUrl: './currency-converter.component.html',
   styleUrls: ['./currency-converter.component.scss'],
 })
-export class CurrencyConverterComponent implements OnInit , OnDestroy {
+export class CurrencyConverterComponent implements OnInit, OnDestroy {
   converterForm!: FormGroup;
   currencies: string[] = [];
   baseCurrency: string = 'EUR';
   targetCurrency: string = 'USD';
-  baseAmount : number = 1;
-  convertedAmount:number =1
+  baseAmount: number = 1;
+  convertedAmount: number = 1;
   conversionResultText: string = '';
+  baseResult:string = '';
   private subscriptions = new Subscription();
-  @Input() disableFromCurrency!:boolean;
-  @Input() hideDetailOption!:boolean;
-  @Input() hideSwapButton !:boolean;
+  @Input() disableFromCurrency!: boolean;
+  @Input() hideDetailOption!: boolean;
+  @Input() hideSwapButton!: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private currencyService: CurrencyService
-  ) {
-   
-  }
-  initForm(){
+  ) {}
+  initForm() {
     this.converterForm = this.formBuilder.group({
       amount: [1, [Validators.required, Validators.pattern(/^\d*\.?\d+$/)]],
       fromCurrency: ['', Validators.required],
       toCurrency: [' ', Validators.required],
     });
-    this.disableForm()
+    this.disableForm();
   }
-  getBaseData(){
+  getBaseData() {
     this.subscriptions.add(
       this.currencyService.baseCurrency$.subscribe((currency) => {
         this.baseCurrency = currency;
@@ -61,32 +60,36 @@ export class CurrencyConverterComponent implements OnInit , OnDestroy {
     this.subscriptions.add(
       this.currencyService.convertedAmount$.subscribe((currency) => {
         this.convertedAmount = currency;
-       // this.converterForm.patchValue({ toCurrency: currency });
       })
     );
-    if(this.conversionResultText === ''){
-      this.conversionResultText = `${this.baseAmount} ${this.baseCurrency } = ${this.convertedAmount.toFixed(2)} ${this.targetCurrency}`;
+    if (this.conversionResultText === '') {
+      this.conversionResultText = `${this.baseAmount} ${ this.baseCurrency} = ${this.convertedAmount.toFixed(2)} ${this.targetCurrency}`;
+      this.baseResult = `${(this.baseAmount/this.baseAmount)}  ${ this.baseCurrency} = ${+this.convertedAmount.toFixed(2)/this.baseAmount} ${this.targetCurrency}`
+      console.log(this.baseResult);
     }
-
   }
   ngOnInit(): void {
-    this.initForm()
+    this.initForm();
     this.getRates();
     this.getBaseData();
-  
   }
-  
-  onFromCurrencyChange(event: Event){
-      const selectElement = event.target as HTMLSelectElement;
-      const value = selectElement.value;
-      console.log('Currency changed to:', value);
-      this.currencyService.setBaseCurrency(value)
+
+  onFromCurrencyChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const value = selectElement.value;
+    console.log('Currency changed to:', value);
+    this.currencyService.setBaseCurrency(value);
   }
-  onToCurrencyChange(event: Event){
-      const selectElement = event.target as HTMLSelectElement;
-      const value = selectElement.value;
-      console.log('Currency changed to:', value);
-      this.currencyService.setTargetCurrency(value)
+  onToCurrencyChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const value = selectElement.value;
+    console.log('Currency changed to:', value);
+    this.currencyService.setTargetCurrency(value);
+  }
+  onAmountChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const newValue = Number(inputElement.value);
+    this.currencyService.setAmount(newValue);
   }
 
   getRates() {
@@ -111,22 +114,23 @@ export class CurrencyConverterComponent implements OnInit , OnDestroy {
   convert() {
     if (this.converterForm.valid) {
       const formValues = this.converterForm.value;
-      this.subscriptions.add(this.currencyService.convertCurrency(
-          formValues.amount ,
-          this.baseCurrency,
-          this.targetCurrency
-        )
-        .subscribe(
-          (result:any) => {
-            this.conversionResultText = `${formValues.amount} ${this.baseCurrency } = ${result.toFixed(2)} ${this.targetCurrency}`;
-            this.disableForm()
-          },
-          
-        ));
+      this.subscriptions.add(
+        this.currencyService
+          .convertCurrency(
+            this.baseAmount,
+            this.baseCurrency,
+            this.targetCurrency
+          )
+          .subscribe((result: any) => {
+            this.conversionResultText = `${formValues.amount} ${
+              this.baseCurrency
+            } = ${result.toFixed(2)} ${this.targetCurrency}`;
+            this.disableForm();
+          })
+      );
     }
-   
   }
-  disableForm(){
+  disableForm() {
     if (this.disableFromCurrency) {
       this.converterForm?.get('fromCurrency')?.disable();
     } else {

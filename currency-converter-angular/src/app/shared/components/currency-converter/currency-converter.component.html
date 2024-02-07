@@ -6,6 +6,7 @@
           type="number"
           id="amount"
           required="required"
+          (change)="onAmountChange($event)"
           class="currency-converter__input"
           formControlName="amount"
          
@@ -47,10 +48,14 @@
     </div>
   
     <div class="currency-row">
-      <!-- To Currency Select -->
       <div class="currency-converter__group ">
         <div class="currency-converter__result">
-          <span>    {{ conversionResultText  ||  " CURRENCY " }}                          </span>
+          <small>    {{ baseResult }}  </small>
+        </div>
+      </div>
+      <div class="currency-converter__group ">
+        <div class="currency-converter__result">
+          <span>    {{ conversionResultText  ||  " CURRENCY " }}  </span>
         </div>
       </div>
      

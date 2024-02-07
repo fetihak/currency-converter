@@ -1,54 +1,15 @@
 <div class="currency-card_container">
-    <div class="currency-card">
+  <div class="currency-card_container">
+    <div class="currency-card" *ngFor="let val of convertedValues" >
       <div class="currency-card__content">
-        <p>1 EUR = 3 USD</p>
+        <p>
+          {{ baseAmount }} {{ baseCurrency }} = {{ val.convertedAmount }}
+          {{ val.toCurrency }}
+        </p>
       </div>
     </div>
-    <div class="currency-card">
-        <div class="currency-card__content">
-          <p>1 EUR = 3 USD</p>
-        </div>
-      </div> 
-      <div class="currency-card">
-        <div class="currency-card__content">
-          <p>1 EUR = 3 USD</p>
-        </div>
-      </div> 
-      <div class="currency-card">
-        <div class="currency-card__content">
-          <p>1 EUR = 3 USD</p>
-        </div>
-      </div>
-      <div class="currency-card">
-        <div class="currency-card__content">
-          <p>1 EUR = 3 USD</p>
-        </div>
-      </div>
-      <div class="currency-card">
-        <div class="currency-card__content">
-          <p>1 EUR = 3 USD</p>
-        </div>
-      </div>
-      <div class="currency-card">
-        <div class="currency-card__content">
-          <p>1 EUR = 3 USD</p>
-        </div>
-      </div>
-      <div class="currency-card">
-        <div class="currency-card__content">
-          <p>1 EUR = 3 USD</p>
-        </div>
-      </div>
-      <div class="currency-card">
-        <div class="currency-card__content">
-          <p>1 EUR = 3 USD</p>
-        </div>
-      </div>
-      <div class="currency-card">
-        <div class="currency-card__content">
-          <p>1 EUR = 3 USD</p>
-        </div>
-      </div>
+  </div> 
+   
   </div>
   
     

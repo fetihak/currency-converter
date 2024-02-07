@@ -35,6 +35,9 @@ export class CurrencyService {
   setBaseAmount(amount: number) {
     this.baseAmount.next(amount);
   }
+  setAmount(amount: number) {
+    this.baseAmount.next(amount);
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -42,6 +45,9 @@ export class CurrencyService {
   getLatestRates(): Observable<Currency> {
     const url = `${this.apiUrl}/latest?access_key=${this.accessKey}`;
     return this.http.get<Currency>(url).pipe(shareReplay(1));
+  }
+  getCurrencyNames(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/symbols?access_key=${this.accessKey}`).pipe(shareReplay(1));
   }
   convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Observable<number> {
     return this.getLatestRates().pipe(
