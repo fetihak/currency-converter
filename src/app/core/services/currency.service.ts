@@ -1,8 +1,8 @@
 import { Currency } from './../../shared/models/Currency';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, forkJoin, of } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { BehaviorSubject, Observable, forkJoin, of, throwError } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -55,21 +55,20 @@ export class CurrencyService {
   }
   convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Observable<number> {
     return this.getLatestRates().pipe(
-      
-      map((data: any) => {
-        if (data && data.rates) {
+      switchMap((data: any) => {
+        if (data && data.rates && data.rates[fromCurrency] != null && data.rates[toCurrency] != null) {
           const fromRate = data.rates[fromCurrency];
           const toRate = data.rates[toCurrency];
-          const euroAmount =
-            fromCurrency === 'EUR' ? amount : amount / fromRate;
-          const convertedAmount =
-            toCurrency === 'EUR' ? euroAmount : euroAmount * toRate;
-            this.convertedAmount.next(convertedAmount);
-          return convertedAmount;
+          const euroAmount = fromCurrency === 'EUR' ? amount : amount / fromRate;
+          const convertedAmount = toCurrency === 'EUR' ? euroAmount : euroAmount * toRate;
+          this.convertedAmount.next(convertedAmount); // Assuming this.convertedAmount is a Subject or BehaviorSubject
+          return of(convertedAmount); // Use 'of' to return the value as an Observable
+        } else {
+          // Use 'throwError' to return an error Observable
+          return throwError(() => new Error('Unable to convert currency due to missing rates or invalid currency codes.'));
         }
-        throw new Error('Unable to convert currency.');
       })
-    )
+    );
   }
 
  

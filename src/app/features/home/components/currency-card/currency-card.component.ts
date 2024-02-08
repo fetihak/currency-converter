@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, catchError, forkJoin, of } from 'rxjs';
 import { CurrencyService } from 'src/app/core/services/currency.service';
@@ -19,7 +20,7 @@ export class CurrencyCardComponent implements OnInit ,OnDestroy {
 
 
   private subscriptions = new Subscription();
-  constructor(private currencyService:CurrencyService) { }
+  constructor(private toastr:ToastrService,private currencyService:CurrencyService) { }
 
   ngOnInit(): void {
     this.getBaseData()
@@ -29,8 +30,11 @@ export class CurrencyCardComponent implements OnInit ,OnDestroy {
     const conversionObservables = popularCurrencies.map(currency => 
       this.currencyService.convertCurrency(1, this.baseCurrency, currency).pipe(
         catchError(error => {
-          console.error(`Error converting ${this.baseCurrency} to ${currency}:`, error);
-          return of(null); // Handle error to keep the stream alive
+          this.toastr.error(`Error converting ${this.baseCurrency} to ${currency}`, 'Conversion Error', {
+            timeOut: 3000,
+            positionClass: 'toast-top-right',
+          });
+          return of(null);
         })
       )
     );

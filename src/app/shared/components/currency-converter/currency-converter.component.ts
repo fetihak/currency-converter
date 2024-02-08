@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Currency } from '../../models/Currency';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-currency-converter',
@@ -26,6 +27,7 @@ export class CurrencyConverterComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private toastr:ToastrService,
     private currencyService: CurrencyService
   ) {}
   initForm() {
@@ -92,12 +94,21 @@ export class CurrencyConverterComponent implements OnInit, OnDestroy {
   getRates() {
     this.currencyService.getLatestRates().subscribe(
       (data: Currency) => {
+        if(data && data.rates) {
         this.currencies = Object.keys(data.rates);
       }
-      // (error) => {
-      //   // Handle error
-      // }
-    );
+      else{
+        console.error('Rates data is undefined or null');
+        this.toastr.error('Failed to load currency rates', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-right',
+        });
+        
+      }
+    })
+     
+      
+    
   }
   swapCurrencies() {
     const fromCurrency = this.converterForm.get('fromCurrency')?.value;
