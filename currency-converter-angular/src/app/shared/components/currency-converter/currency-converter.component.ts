@@ -65,7 +65,6 @@ export class CurrencyConverterComponent implements OnInit, OnDestroy {
     if (this.conversionResultText === '') {
       this.conversionResultText = `${this.baseAmount} ${ this.baseCurrency} = ${this.convertedAmount.toFixed(2)} ${this.targetCurrency}`;
       this.baseResult = `${(this.baseAmount/this.baseAmount)}  ${ this.baseCurrency} = ${+this.convertedAmount.toFixed(2)/this.baseAmount} ${this.targetCurrency}`
-      console.log(this.baseResult);
     }
   }
   ngOnInit(): void {
@@ -77,13 +76,11 @@ export class CurrencyConverterComponent implements OnInit, OnDestroy {
   onFromCurrencyChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const value = selectElement.value;
-    console.log('Currency changed to:', value);
     this.currencyService.setBaseCurrency(value);
   }
   onToCurrencyChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const value = selectElement.value;
-    console.log('Currency changed to:', value);
     this.currencyService.setTargetCurrency(value);
   }
   onAmountChange(event: Event) {

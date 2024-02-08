@@ -15,17 +15,14 @@ export class ErrorInterceptor implements HttpInterceptor {
         let errorMessage = 'An error occurred';
 
         if (error.error instanceof ErrorEvent) {
-          console.log("here")
           errorMessage = `Error: ${error.error.message}`;
         } else {
-          console.log("here1")
           errorMessage = `Error: ${error.status} - ${error.statusText}`;
         }
         // this.toastr.error(errorMessage, 'Error', {
         //   timeOut: 3000, // Dismiss after 3 seconds
         //   positionClass: 'toast-top-right', // Position of toast notification
         // });
-        alert(errorMessage)
         return throwError(() => new Error(errorMessage));
       })
     );
