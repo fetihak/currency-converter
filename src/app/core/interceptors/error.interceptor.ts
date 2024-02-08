@@ -12,19 +12,25 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse | Error) => {
         let errorMessage = 'An error occurred';
-
         if (error instanceof HttpErrorResponse) {
-          errorMessage = `Error: ${error.status} - ${error.statusText}`;
+          if (error.status === 0) {
+            errorMessage = 'Network error: Please check your internet connection.';
+          } else {
+            errorMessage = `Error: ${error.status} - ${error.statusText}`;
+          }
         } else if (error instanceof ErrorEvent || error instanceof Error) {
           errorMessage = `Error: ${error.message}`;
         } else {
           console.log('Unknown error type:', error);
         }
-        this.toastr.error('1111', 'Error', {
+       
+        this.toastr.error(errorMessage, 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-right',
         });
+
         return throwError(() => new Error(errorMessage));
+      
       })
     );
   }
